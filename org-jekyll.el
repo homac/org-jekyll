@@ -114,6 +114,10 @@ list that holds buffers to release."
                        (cdr (assoc org-jekyll-category props))
                      nil))
          (yaml-front-matter (copy-alist props)))
+    (when org-use-property-inheritance
+      (setq props (append org-file-properties props)
+            props (append org-global-properties props)
+            props (append org-global-properties-fixed props)))
     (unless (assoc "layout" yaml-front-matter)
       (push '("layout" . "post") yaml-front-matter))
     (when time
