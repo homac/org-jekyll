@@ -127,7 +127,12 @@ list that holds buffers to release."
                                                "[ \t]" "-" heading)))
              (str-time (and (string-match "\\([[:digit:]\-]+\\) " time)
                             (match-string 1 time)))
-             (to-file (format "%s-%s.html" str-time 
+             (str:hhmm (and (string-match "[A-Za-z]+\\ *\\([[:digit:]:]+\\)" time)
+                            (match-string 1 time)))
+             (str-hhmm (if str:hhmm
+                           (concat "_" (replace-regexp-in-string ":" "-" str:hhmm))
+                         ""))
+             (to-file (format "%s%s-%s.html" str-time str-hhmm
                               (org-jekyll-sanitize-string title)))
              (org-buffer (current-buffer))
              (yaml-front-matter (cons (cons "title" heading) 
